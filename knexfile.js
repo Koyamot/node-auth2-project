@@ -1,4 +1,5 @@
 // Update with your config settings.
+require('dotenv').config();
 
 module.exports = {
 
@@ -8,24 +9,10 @@ module.exports = {
     connection: {
       filename: './data/dev.sqlite3'
     },
-    migrations: {
-      directory: "./data/migrations",
-    },
-    seeds: {
-      directory: "./data/seeds",
-    },
-  },
-
-  staging: {
-    client: 'postgresql',
-    connection: {
-      database: 'my_db',
-      user:     'username',
-      password: 'password'
-    },
     pool: {
-      min: 2,
-      max: 10
+      afterCreate: (conn, done) => {
+        conn.run('PRAGMA foreign_keys = ON', done)
+      },
     },
     migrations: {
       directory: "./data/migrations",
@@ -35,23 +22,4 @@ module.exports = {
     },
   },
 
-  production: {
-    client: 'postgresql',
-    connection: {
-      database: 'my_db',
-      user:     'username',
-      password: 'password'
-    },
-    pool: {
-      min: 2,
-      max: 10
-    },
-    migrations: {
-      directory: "./data/migrations",
-    },
-    seeds: {
-      directory: "./data/seeds",
-    },
-  }
-
-};
+}

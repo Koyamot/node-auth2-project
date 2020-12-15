@@ -9,17 +9,16 @@ module.exports = {
 async function find() {
 
   try {
-    return await db("users").select("id", "username", "password", "email").orderBy("id");
+    return await db("users").select("id", "username", "department").orderBy("id");
   } catch (error) {
     throw error;
   }
   
 }
 
-async function findBy(filter) {
+async function findBy(username) {
   try {
-      const user = await db('users').where(filter).orderBy('id');
-      return user;
+    return await db('users').where({ username }).first();   
   } catch (err) {
       throw err;
   }
